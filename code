@@ -1,0 +1,35 @@
+def alpha(image, mask_size, outlier_num):
+    """
+    Apply an alpha trimmed filter to a 2D image.
+    
+    Parameters
+    ----------
+    
+    image - array 2-D sequence of numbers.
+    mask_size - the size of the square mask
+    outlier_num - num of the biggest and the smallest pair of numbers 
+            (must be smaller than the mask size)
+
+    """
+    temp = []
+    index = mask_size // 2
+    out = np.zeros((len(image),len(image[0])))
+    for i in range(len(image)):
+        for j in range(len(image[0])):
+                   
+            for z in range(mask_size):
+                   
+                if i + z - index < 0 or i + z + index > len(image) - 1:
+                   for c in range(mask_size):
+                       temp.append(0)
+                else:
+                    if j + z - index < 0 or j + index > len(image[0]) - 1:
+                       temp.append(0)
+                    else:
+                       for k in range(mask_size):
+                           temp.append(image[i + z - index][j + k - index])
+            temp = sort(temp)[outlier_num:-outlier_num]
+            if temp != 0:
+                out[i][j] = np.mean(temp)
+            temp = []
+    return out
