@@ -33,3 +33,27 @@ def alpha(image, mask_size, outlier_num):
                 out[i][j] = np.mean(temp)
             temp = []
     return out
+
+
+def sort(array):
+    """
+    Sort data in an ascending order.
+    """
+
+    less = []
+    equal = []
+    greater = []
+
+    if len(array) > 1:
+        pivot = array[0]
+        for x in array:
+            if x < pivot:
+                less.append(x)
+            elif x == pivot:
+                equal.append(x)
+            elif x > pivot:
+                greater.append(x)
+
+        return sort(less)+equal+sort(greater)  
+    else:  
+        return array
